@@ -1,0 +1,551 @@
+//
+//	Design test pagina_porno
+//
+
+@import 'global.scss';
+
+
+// COLORES
+$blanco: #fffeef;
+$blanco_2: #fcfae1;
+$rojo: #b9121b;
+$rojo_oscuro: #8b0d14;
+$marron: #4c1b1b;
+
+// [ PARTES ]
+@import 'header.scss';
+
+// [ Base  ]
+body{
+	background: $blanco;
+	// background: url(../imagenes/ruido_blanco.png);
+	background: linear-gradient(135deg, rgba(252,250,225,1) 0%,rgba(255,254,239,1) 100%); 
+	color: #1e1e1e;
+	font-family: sans-serif;
+}
+
+section{
+	margin-top: 45px;
+	overflow: hidden;
+	padding-bottom: 1px;
+}
+
+.boton{
+	background-image: url(../imagenes/ruido_rojo.png) !important;
+	// background: $rojo;
+	color: white;
+	display: inline-block;
+	float: left;
+	border-right: 1px solid $rojo_oscuro;
+	border-top: 1px solid $rojo_oscuro;
+	border-bottom: 1px solid $rojo_oscuro;
+	padding: 10px 20px;
+	letter-spacing: 1.5px;
+
+	box-shadow:
+		0px 1px 0px $rojo_oscuro,
+		0px 2px 0px $rojo_oscuro,
+		0px 3px 0px $rojo_oscuro,
+		1px 3px 10px -1px rgba(0,0,0, .3);
+
+	transition: all .3s;
+	position: relative;
+	top: 0px;
+	
+	&::selection{
+		background: transparent
+	}
+	&::-moz-selection{
+		background: transparent
+	}
+	&:hover{
+		top: 3px;
+		box-shadow: 0px 0px 0px transparent;
+	}
+
+	&:first-child{
+		border-left: 1px solid $rojo_oscuro;
+	}
+
+}
+
+article{
+	background: #3e3e3e;
+	display: inline-block;
+	cursor: pointer;
+	border: 1px solid #3e3e3e;
+	float: left;
+	width: 240px;
+	height: 160px;
+	margin-bottom: -1px;
+	position: relative;
+	margin-right: -3px;
+
+	.previews{
+		cursor: pointer;
+		position: absolute;
+		top: 0px;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		height: 100%;
+		width: 100%;
+		li{
+			cursor: pointer;
+			list-style-type: none;
+			position: absolute;
+			height: 100%;
+		}
+	}
+}
+
+.link_video{
+	display:block;
+	width: 100%;
+	height: 100%;
+}
+
+// [ FOOTER ]
+footer{
+	padding: 20px;
+	background: $marron;
+	text-align: center;
+
+	a{
+		color: white;
+		margin-right: 10px;
+		margin-left: 10px;
+		letter-spacing: 1px;
+
+	}
+}
+
+// [ Home ]
+main{
+	margin: auto;
+	margin-bottom: 200px;
+	text-align: center;
+	width: 1200px;
+
+
+}
+
+section#ultimos_videos{
+
+	// test
+	// @for $i from 1 through 15{
+	// 	article:nth-child(#{$i}){
+	// 		background: url(../imagenes/#{$i}.jpg);
+	// 		background-size: cover;
+	// 	}
+	// }
+
+} // fin ultimos_videos
+
+a#todos_videos{
+
+	border-left: 1px solid $rojo_oscuro;
+	width: 120px;
+	left: 50%;
+	margin-left: -80px;
+	margin-top: 40px;
+	margin-bottom: 100px;
+	
+}
+
+
+// [ pagina video ]
+section#video_section{
+	
+	margin-top: 45px;
+
+	#video{
+		
+		width: 720px;
+
+		iframe{
+			width: 100%;
+			height: 420px;
+			border: 1px solid #3e3e3e;
+		}
+
+		#tube_info{
+			display: inline-block;
+			background-color: #f3eb84;
+			color: #2e2e2e;
+			float: left;
+			letter-spacing: .5px;
+			border-radius: 6px;
+			border: 2px solid #e9db28;
+			margin-top: 20px;
+			padding: 10px 20px;
+		}
+	}
+} // fin video_section
+
+section#relacionados{
+	
+	text-align: left;
+	overflow: visible !important;
+
+	#categorias{
+		display: inline-block;
+		text-align: center;
+		margin: auto;
+
+		h3{
+			cursor: pointer;
+			display: inline-block;
+			padding: 10px 20px;
+			margin-right: 40px;
+		}
+	}
+
+	#videos_categorias{
+
+		margin-top: 40px;
+
+		.videos{
+
+			position: absolute;
+			 margin-bottom: 200px;
+			width: 1200px;
+
+			// Elementos JS
+			display: none;
+			
+
+			// test
+			// @for $i from 1 through 15{
+			// 	article:nth-child(#{$i}){
+			// 		background: url(../imagenes/#{$i}.jpg);
+			// 		background-size: cover;
+			// 	}
+			// }
+		}
+
+		.boton{
+			
+			top: 40px;
+			&:hover{
+				top: 44px;
+				box-shadow: none;
+			}
+		}
+
+	}
+
+} // fin relacionados
+
+// [ LISTAS ]
+figure{
+
+	border-bottom: 1px solid $marron;
+	background: rgba(244, 237, 148, 0);
+	display: inline-block;
+	margin: 0;
+	margin-right: 20px;
+	width: 300px;
+	
+	transition: background .3s;
+	&:hover{
+		background: rgba(244, 237, 148, 1);
+	}
+		
+
+	a{	
+		color: $marron;
+		display: block;
+		overflow: hidden;
+		padding: 10px;
+
+		h3, small{
+			display: inline-block;
+		}
+		h3{
+			float: left;
+		}
+		small{
+			float: right;
+			position: relative;
+			top: 5px;
+		}
+
+	}
+
+}
+
+
+// [ RESPONSIVE ]
+
+@media screen and (max-width: 1350px){
+	main, #videos_categorias .videos, nav{
+		width: 960px !important;
+	}
+}
+@media screen and (min-width: 1350px){
+	figure{
+		width: 380px;
+	}
+}
+
+// [ MOVIL ]
+@media screen and (max-width: 1000px){
+	
+	.boton{
+		&:hover{
+			top: 0px !important;
+			box-shadow:
+				0px 1px 0px $rojo_oscuro,
+				0px 2px 0px $rojo_oscuro,
+				0px 3px 0px $rojo_oscuro,
+				1px 3px 10px -1px rgba(0,0,0, .3) !important;
+		}
+	}
+	
+	.paginacion{
+    margin: 40px auto;
+    height: 10px;
+    width: 196px;
+	}
+	.paginacion_2{
+		width: 250px !important;
+	}
+
+	footer{
+		padding: 5px;
+		a{
+			display:block;
+			margin-bottom: 15px;
+			&:first-child{ margin-top: 15px; }
+		}
+	}
+
+	main{
+		width: 100% !important;
+
+		article{
+			margin-right: -2px;
+			width: 33.33%;
+		}
+	}
+	
+	header{ margin-top: 0px; }
+	section{ margin-top: 2px; }
+	section h3, section h2{
+		margin: 10px;
+		margin-bottom: 10px !important;
+	}
+	section h2{
+		font-size: 19px;
+	}
+
+	nav{
+
+		background: $rojo;
+
+		margin: 0 !important;
+		width: 100% !important;
+
+		ul#links_nav{
+			display: none;
+
+			position: absolute;
+			top: 43px;
+			width: 100%;
+			z-index: 2;
+			left: 0px;
+
+			a{
+				width: 100%;
+				display: block;
+				text-align: center;
+			}
+		}
+		
+		label#burger_label, section#search_box{
+			display: inline-block;
+		}
+		label#burger_label{
+			display: inline-block !important;
+			padding: 0 !important;
+			width: 20%;
+
+			span{ 
+				position: initial !important;
+				margin: 7px auto 7px;
+			}
+		}
+
+		section#search_box{
+			
+			position: relative;
+			margin-left: -1px;
+			right: 2px;
+			width: 80%;
+
+			input[type="submit"]{ display:none }
+			input[type="text"]{
+				padding: 0px;
+				height: 38px;
+				text-indent: 12px;
+				width: 80%
+			}
+			svg{
+				display: block;
+			}
+
+			#type_combinado, #search_results{
+				width: auto;
+			}
+			.result_type_name a { opacity: 0 }
+
+		}
+	}
+
+	#about p, #contacto .boton { margin:10px !important; }
+
+	// Pagina VIDEO
+	#video_section{
+
+		margin-top: 0 !important;
+
+		#video{
+			width: 100% !important;
+		}
+	}
+	#videos_categorias .videos{
+		left: -2px;
+		width: 100% !important;
+	}
+	#relacionados{
+		text-align: center !important;
+		#categorias{
+			width: 100%;
+
+			h3{
+				display: block;
+				width: 90%;
+				margin: 0 !important;
+				padding: 10px 0px !important;
+				text-indent: 10px;
+			}
+		}
+	}
+	#porndoe{
+		top: 433px !important;
+		width: 100% !important;
+	}
+	#tube_info{
+		display: inline-block;
+    margin: 10px auto 10px;
+    float:none !important;
+	}
+
+
+}// Fin movil 1
+@media screen and (max-width: 700px){
+	main,{
+
+		article{
+			width: 50%;
+		}
+	}
+}
+@media screen and (max-width: 425px){
+	main{
+
+		article{
+			// height: 230px;
+			// width: 100%;
+		}
+	}
+
+	#porndoe{
+    top: 400px !important;
+    height: 64px !important;
+	}
+}
+
+// @media screen and (min-width: 1650px){
+// 	main, #videos_categorias .videos, nav{
+// 		width: 1438px !important;
+// 	}
+// }
+
+// Excepciones
+#porndoe{
+	border-top: 1px solid #3e3e3e;
+	position: absolute;
+	width: 722px;
+	height: 38px;
+	background-color: rgb(254, 253, 235);
+	top: 510px;
+}
+
+// [ PAGINACIONES y DEMAS PAGINAS ]
+section{
+	h2, h3{
+		color: $marron;
+		margin-bottom: 20px;
+		text-align: left;
+	}
+}
+.paginacion{
+	margin-top: 40px;
+}
+
+.btn_statico{
+	display: inline-block;
+	&:hover{
+		top: 8px;
+		box-shadow:
+			0px 1px 0px $rojo_oscuro,
+			0px 2px 0px $rojo_oscuro,
+			0px 3px 0px $rojo_oscuro,
+			0px 4px 0px $rojo_oscuro,
+			1px 3px 10px -1px rgba(0,0,0, .3);
+	}
+}
+
+
+// [ Contacto ]
+#contacto{
+	
+	height: 200px;
+
+	h2{
+		text-align: center;
+	}
+
+	.boton{
+		width: 200px;
+		margin: auto;
+		border-radius: 6px;
+		display: block;
+		margin-bottom: 20px;
+	}
+}
+
+// [ About ]
+#about{
+	p{
+		text-align: left;
+	}
+}
+
+// [ 500 ERROR ]
+#error_500{
+	h4, p{ color: $marron }
+	h4{
+		font-size: 60px;
+		margin-bottom: 20px;
+		margin-top: 20px;
+	}
+	p{
+		line-height: 25px;
+	}
+}
+
+
+

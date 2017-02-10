@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACA,SACI,CACH,MAAM,CAAE,CAAC,CACT,2BAA2B,CAAE,WAAgB,CAG9C,UAGC,CACA,MAAM,CAAE,CAAC,CAGV,CAAC,CACA,eAAe,CAAE,IAAI,CAGtB,OAAQ,CACJ,aAAa,CAAE,OAAoB,CACnC,aAAa,CAAE,GAAG,CAClB,cAAc,CAAE,IAAI",
+"sources": ["../sass/global.scss"],
+"names": [],
+"file": "global.css"
+}

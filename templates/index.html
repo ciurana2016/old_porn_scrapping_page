@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+	
+	<section id="ultimos_videos">
+
+			{% for video in ultimos_videos %}
+				
+				<article data-img="{{video.thumbnail}}">
+					<a class="link_video" title="{{video.titulo}}" target="_blank" href="{% url 'pagina_video' video.slug %}">	
+						<ul class="previews">
+							{% for preview in video.previews.all %}
+								<li data-img="{{preview}}"></li>
+							{% endfor %}
+						</ul>
+					</a>
+				</article>
+
+			{% endfor %}
+
+	</section>
+
+	<a href="{% url 'videos' %}" id="todos_videos" class="boton">More videos</a>
+	
+	{% comment %}
+	<script>
+		var videos = document.getElementsByTagName('article');
+		var parar_load_img = false;
+		var altura_img = videos[0].offsetHeight;
+		var posicion_img_0 = videos[0].offsetTop;
+
+		var f_prevew = function(video, imagen){
+			imagen.addEventListener('mouseover', function(){
+				img = this.getAttribute('data-img');
+				video.style.backgroundImage = 'url('+ window.location.origin+'/' +img +')';
+			});
+		}
+
+		function load(){
+
+			function pintar(numero){
+				// Recorremos imagenes y cargamos
+				for ( var l=0; l<numero; l++ ){
+					img = videos[l].getAttribute('data-img');
+					videos[l].style.backgroundImage = 'url('+ window.location.origin+'/' +img +')';
+					videos[l].style.backgroundPosition = '50% 50%';
+					videos[l].style.backgroundSize = 'cover';
+					var vid = videos[l];
+					// Cargamos imagenes de preview y damos funcionalidad
+					pvw = videos[l].querySelector('ul');
+
+					// Width y posicion de li
+					lis = pvw.querySelectorAll('li');
+					
+					var left = 0;
+					var index = (videos[l].offsetWidth / lis.length);
+
+					for( var i=0; i<lis.length; i++ ){
+						lis[i].style.width = index + 'px';
+						lis[i].style.left = left + 'px';
+						left = left + index;
+
+						// Hover
+						f_prevew( vid, lis[i] )
+					}
+
+				} // fin for videos
+			};
+
+			if ( parar_load_img == false ){
+
+				// Variables
+				var altura_ventana = window.innerHeight;
+				var posicion_scroll = pageYOffset;
+				var altura_documento = document.body.scrollHeight;
+
+				var columnas = 0
+				if ( window.innerWidth >= 1649 ){
+					columnas = 6;
+				}else if( window.innerWidth >= 1349 ){
+					columnas = 5;
+				}else{
+					columnas = 4;
+				}
+
+				// posicion_scroll + altura_ventana = altura_documento;
+				// Si llegamos al final ya no ejecutamos la funcion
+				//  - 400 porque sino deja de cargar antes
+				if ( (altura_ventana + posicion_scroll) >= altura_documento - 400 ){
+					// vargamos todas y paramos
+					pintar(videos.length);
+					parar_load_img = true;
+				}
+
+				// Localizamos todas las imagenes en window o parcialmente 
+				// en window
+				var n = 0;
+
+				for ( var i =  altura_img + posicion_img_0;
+					i < (altura_ventana + posicion_scroll);
+					i = i + altura_img ){
+
+					// Numero de imagenes a cargar
+					n = ( (i / altura_img) * columnas ) + 5; // De regalo
+					if ( n > videos.length){
+						pintar(videos.length);
+						parar_load_img = true;
+						break
+					}
+				};
+
+				if ( parar_load_img == false ){
+					// Recorremos imagenes y cargamos
+					pintar(n);
+				};
+
+			};
+			
+		}; // FIN load
+
+		window.addEventListener( 'scroll', function(){
+			load();
+		} );
+		window.addEventListener( 'resize', function(){
+			load();
+		} );
+		window.addEventListener( 'load', function(){
+			load();
+		} );
+
+	</script>		
+	{% endcomment %}
+	<script>var a=document.getElementsByTagName("article"),h=!1,k=a[0].offsetHeight,l=a[0].offsetTop;function p(d,c){c.addEventListener("mouseover",function(){img=this.getAttribute("data-img");d.style.backgroundImage="url("+window.location.origin+"/"+img+")"})}function q(){function d(d){for(var b=0;b<d;b++){img=a[b].getAttribute("data-img");a[b].style.backgroundImage="url("+window.location.origin+"/"+img+")";a[b].style.backgroundPosition="50% 50%";a[b].style.backgroundSize="cover";var e=a[b];pvw=a[b].querySelector("ul");lis=pvw.querySelectorAll("li");for(var c=0,f=a[b].offsetWidth/lis.length,g=0;g<lis.length;g++)lis[g].style.width=f+"px",lis[g].style.left=c+"px",c+=f,p(e,lis[g])}}if(0==h){var c=window.innerHeight,m=pageYOffset,e=document.body.scrollHeight,n=0,n=1649<=window.innerWidth?6:1349<=window.innerWidth?5:4;c+m>=e-400&&(d(a.length),h=!0);for(var e=0,f=k+l;f<c+m;f+=k)if(e=f/k*n+5,e>a.length){d(a.length);h=!0;break}0==h&&d(e)}}window.addEventListener("scroll",function(){q()});window.addEventListener("resize",function(){q()});window.addEventListener("load",function(){q()});</script>
+
+
+{% endblock contenido %}
+
+{% block footer %}
+	<footer>
+		<a href="{% url 'about' %}">About</a>
+		<a href="{% url 'contacto' %}">Contact</a>
+		<a href="{% url 'tos' %}">Terms of Service</a>
+	</footer>
+{% endblock footer %}

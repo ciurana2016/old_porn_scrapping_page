@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+{% spaceless %}
+	
+	<section id="todos_videos">
+		
+		<h2>All videos with keyword: {{query}}</h2>
+
+		{% if page_obj.paginator.num_pages != 1 %}
+			<h3>Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</h3>
+		{% endif %}
+
+		{% for video in new_list %}
+			<article data-img="{{video.thumbnail}}">
+				<a class="link_video" target="_blank" href="{% url 'pagina_video' video.slug %}"></a>
+			</article>
+		{% endfor %}
+
+	</section>
+
+	{% if page_obj.paginator.num_pages != 1 %}
+		<div class="paginacion {% if page_obj.number > 1 %}paginacion_2{% endif %}">
+			<div class="boton btn_statico">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</div>
+			{% if page_obj.has_previous %}
+				<a href="{{url_paginator}}&page={{ page_obj.previous_page_number }}" class="boton"><</a>
+			{% endif %}
+
+			{% if page_obj.has_next %}
+				<a href="{{url_paginator}}&page={{ page_obj.next_page_number }}" class="boton">></a>
+			{% endif %}
+		</div>		
+	{% endif %}
+
+<script>var a=document.getElementsByTagName("article"),d=!1,f=a[0].offsetHeight,g=a[0].offsetTop;function n(){function h(b){for(var c=0;c<b;c++)img=a[c].getAttribute("data-img"),a[c].style.backgroundImage="url("+window.location.origin+"/"+img+")",a[c].style.backgroundPosition="50% 50%",a[c].style.backgroundSize="cover"}if(0==d){var k=window.innerHeight,l=pageYOffset,b=document.body.scrollHeight,m=0,m=1649<=window.innerWidth?6:1349<=window.innerWidth?5:4;k+l>=b-400&&(h(a.length),d=!0);for(var b=0,e=f+g;e<k+l;e+=f)if(b=e/f*m,b>a.length){h(a.length);d=!0;break}0==d&&h(b)}}window.addEventListener("scroll",function(){n()});window.addEventListener("resize",function(){n()});window.addEventListener("load",function(){n()});</script>
+
+{% endspaceless %}
+{% endblock contenido %}

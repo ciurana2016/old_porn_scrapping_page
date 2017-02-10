@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+
+{% block titulo %}{% endblock titulo %}
+
+{% block title %}{{object.titulo}} | MENEANDOTELA{% endblock %}
+{% block ogtitle %}{{object.titulo}} | MENEANDOTELA{% endblock%}
+{% block ogimage %}http://www.meneandotela.com/{{object.thumbnail}}{% endblock ogimage %}
+
+{% block contenido %}
+
+{% spaceless %}
+	
+	
+
+	{# DATOS JS #}
+	<div id="pagina_tube" style="display:none">{{object.pagina_tube}}</div>
+
+	{# VIDEO #}
+	<section id="video_section">
+		
+		<div id="video">
+			<iframe  src="{{object.codigo_iframe}}" frameborder="0" allowfullscreen scrolling="no" seamless></iframe>
+
+			<div style="display:none" id="tube_info">
+				Click on fullscreen to be able to select HD quality !
+			</div>
+		</div>
+
+	</section>
+	
+	{% comment %}
+	<script>
+		// Mejor no esperar a que todo se carge
+		var pagina_tube = document.getElementById('pagina_tube').innerHTML;
+
+		if ( pagina_tube === 'porndoe.com' ){
+			iframe = document.getElementsByTagName('iframe')[0];
+			// iframe.style.height = '390px';
+			iframe.insertAdjacentHTML('afterend', '<div id="porndoe"></div>');
+		} else if( pagina_tube === 'porndig.com' ){
+			alerta = document.getElementById('tube_info');
+			alerta.style.display = 'inline-block';
+		}
+	</script>		
+	{% endcomment %}
+	<script>var a=document.getElementById("pagina_tube").innerHTML;"porndoe.com"===a?(iframe=document.getElementsByTagName("iframe")[0],iframe.insertAdjacentHTML("afterend",'<div id="porndoe"></div>')):"porndig.com"===a&&(alerta=document.getElementById("tube_info"),alerta.style.display="inline-block");</script>
+
+	
+	{# RELACIONADOS #}
+	<section id="relacionados">
+		
+		{# TABS #}		
+		<div id="categorias">
+
+			{# Primero miramos casting de tenerlo #}
+			{% if casting %}
+				{% for cast in casting %}
+					<h3 class="categoria">{{cast}}</h3>
+				{% endfor %}
+			{% endif %}
+			
+			{# Si tenemos pagina pago #}
+			{% if pagina_pago %}
+				{% for pagina in pagina_pago %}
+					<h3 class="categoria">{{pagina.nombre}}</h3>
+				{% endfor %}
+			{% endif %}
+
+			{# Videos relacionados por tags #}
+			{% if videos_relacionados %}
+				<h3 class="categoria">Related Videos</h3> 	
+			{% endif %} 
+
+		</div>
+		
+		{# RESULTADO DE TABS #}
+		<div id="videos_categorias">
+
+			{# Primero miramos casting de tenerlo #}
+			{% if casting %}
+				{% for cast, lista_videos in casting.items %}
+					<div class="videos">
+						{% for video in lista_videos %}
+							<article data-img="/{{video.thumbnail}}">
+							<a href="{% url 'pagina_video' video.slug %}" class="link_video">
+								<ul class="previews">
+									{% for preview in video.previews.all %}
+										<li data-img="{{preview}}"></li>
+									{% endfor %}
+								</ul>
+							</a>
+							</article>
+						{% endfor %}
+					</div>
+				{% endfor %}
+			{% endif %}
+			
+			{# Si tenemos pagina pago #}
+			{% if pagina_pago %}
+				{% for pagina, lista_videos in pagina_pago.items %}
+					<div class="videos">
+						{% for video in lista_videos %}
+							<article data-img="/{{video.thumbnail}}">
+							<a href="{% url 'pagina_video' video.slug %}" class="link_video">
+								<ul class="previews">
+									{% for preview in video.previews.all %}
+										<li data-img="{{preview}}"></li>
+									{% endfor %}
+								</ul>
+							</a>
+							</article>
+						{% endfor %}
+						{# Si tenemos 20 videos mostramos link a pagina para ver mas #}
+						{% if lista_videos|length == 20 %}
+							<a href="{% url 'videos_pagina_pago' pagina.nombre_api %}" class="boton">More from {{pagina}}</a>
+						{% endif %}
+					</div>
+				{% endfor %}
+			{% endif %}
+
+			{# Videos relacionados por TAGS #}
+			{% if videos_relacionados %}
+				<div class="videos">
+					{% for video in videos_relacionados %}
+						<article data-img="/{{video.thumbnail}}">
+						<a href="{% url 'pagina_video' video.slug %}" class="link_video">
+							<ul class="previews">
+								{% for preview in video.previews.all %}
+									<li data-img="{{preview}}"></li>
+								{% endfor %}
+							</ul>
+						</a>
+						</article>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+
+		</div>
+
+	</section>
+	
+	{% comment %}
+	<script>
+
+		function pintar(n){
+			for ( var i=0; i<videos_[n].children.length; i++){
+				vid = videos_[n].children[i];
+				img = window.location.origin + vid.getAttribute('data-img');
+				vid.style.backgroundImage = 'url('+ img +')';
+				vid.style.backgroundPosition = '50% 50%';
+				vid.style.backgroundSize = 'cover';
+			}
+			return true;
+		}
+
+		// TABS
+		var categorias = document.getElementsByClassName('categoria');
+		var videos_ = document.getElementsByClassName('videos');
+
+		// Damos funcionalidad a todos los thumbs sin 
+		// Pensar en el codigo de abajo. cause fuk it ! ;D
+
+		var f_prevew = function(video, imagen){
+			// console.log('AGREGADO!');
+			imagen.addEventListener('mouseover', function(){
+				img = this.getAttribute('data-img');
+				video.style.backgroundImage = 'url('+ window.location.origin+'/' +img +')';
+			});
+		}
+
+		var vds = document.querySelectorAll('article');
+
+		for ( var i=0; i<vds.length; i++ ){
+			tmbs = vds[i].querySelectorAll('li');
+
+			var vid = vds[i];
+			var left = 0;
+			var index = (240 / tmbs.length);
+
+			// Anchura y posicion lis.
+			for ( var r=0; r<tmbs.length; r++ ){
+				tmbs[r].style.width = index + 'px';
+				tmbs[r].style.left = left + 'px';
+				left = left + index;
+
+				// Hover
+				f_prevew( vid, tmbs[r] )
+			}
+
+		}
+
+
+		// Check si ya hemos clickado el tab o no ( Para no cargar multiples veces )
+		var check_tab = {};
+		for ( var i=0; i<categorias.length; i++){
+			check_tab[i] = false
+		};
+
+		// Subrayar primera categoria y mostrar sus videos
+		categorias[0].style.borderBottom = '2px solid black';
+		videos_[0].style.display = 'block';
+		check_tab[0] = true;
+		pintar(0);		
+
+		// Each de cada Categoria
+		Array.prototype.forEach.call(categorias, function(el, i){
+
+			// Ponemos On Click a cada una
+			el.addEventListener( 'click', function(){
+
+				// Reseteamos estilos de todas
+				for (var l=0; l< categorias.length; l++){
+					videos_[l].style.display = 'none';
+					categorias[l].style.borderBottom = 'none';
+				}
+
+				// Tras resetear estilos ponemos a la que hemos clickado
+				videos_[i].style.display = 'block';
+				categorias[i].style.borderBottom = '2px solid black';
+
+				// Mostramos las imagenes
+				if( check_tab[i] == false ){
+					pintar(i);
+					check_tab[i] = true;
+				}
+				
+
+			} );
+		});
+	</script>		
+	{% endcomment %}
+	
+		
+	<script>function c(a){for(var b=0;b<d[a].children.length;b++)e=d[a].children[b],img=window.location.origin+e.getAttribute("data-img"),e.style.backgroundImage="url("+img+")",e.style.backgroundPosition="50% 50%",e.style.backgroundSize="cover"}var f=document.getElementsByClassName("categoria"),d=document.getElementsByClassName("videos");function g(){var a=e;tmbs[h].addEventListener("mouseover",function(){img=this.getAttribute("data-img");a.style.backgroundImage="url("+window.location.origin+"/"+img+")"})}for(var k=document.querySelectorAll("article"),l=0;l<k.length;l++){tmbs=k[l].querySelectorAll("li");for(var e=k[l],m=0,n=240/tmbs.length,h=0;h<tmbs.length;h++)tmbs[h].style.width=n+"px",tmbs[h].style.left=m+"px",m+=n,g()}for(var p={},l=0;l<f.length;l++)p[l]=!1;f[0].style.borderBottom="2px solid black";d[0].style.display="block";p[0]=!0;c(0);Array.prototype.forEach.call(f,function(a,b){a.addEventListener("click",function(){for(var a=0;a<f.length;a++)d[a].style.display="none",f[a].style.borderBottom="none";d[b].style.display="block";f[b].style.borderBottom="2px solid black";0==p[b]&&(c(b),p[b]=!0)})});</script>
+
+	
+{% endspaceless %}
+{% endblock contenido %}

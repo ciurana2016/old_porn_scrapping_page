@@ -1,0 +1,23 @@
+// [ global ]
+body,
+html{
+	margin: 0;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+h1,
+h2,
+h3,
+p{
+	margin: 0;
+}
+
+a{
+	text-decoration: none;
+}
+
+*:focus {
+    outline-color: rgba(100,100,100, 1);
+    outline-width: 3px;
+    outline-offset: -1px
+}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load cache %}
+
+{% block contenido %}
+{% cache 86400 all_list modelo page_obj.number %}
+{% spaceless %}
+	
+	<section id="paginas_pago">
+		
+		{% if page_obj.paginator.num_pages != 1 %}
+			<h3>Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</h3>
+		{% endif %}
+
+		{% for object in object_list %}
+			
+			<figure>
+				<a href="{% if object.nombre_api %}{% if modelo == 'PaginaPago' %}{% url 'videos_pagina_pago' object.nombre_api %}{% else %}{% if modelo == 'Modelo' %}{% url 'videos_modelo' object.nombre_api %}{% else %}{% url 'videos_tag' object.nombre_api %}{% endif %}{% endif %}{% endif %}">
+					<h3>{{object.nombre}}</h3>
+					<small>{{object.numero_videos}} videos</small>
+				</a>
+			</figure>
+
+		{% endfor %}
+	</section>
+	
+	{% if page_obj.paginator.num_pages != 1 %}
+		<div class="paginacion {% if page_obj.number > 1 %}paginacion_2{% endif %}">
+			<div class="boton btn_statico">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</div>
+			{% if page_obj.has_previous %}
+				<a href="?page={{ page_obj.previous_page_number }}" class="boton"><</a>
+			{% endif %}
+
+			{% if page_obj.has_next %}
+				<a href="?page={{ page_obj.next_page_number }}" class="boton">></a>
+			{% endif %}
+		</div>		
+	{% endif %}
+
+	
+{% endspaceless %}
+{% endcache %}
+{% endblock contenido %}
